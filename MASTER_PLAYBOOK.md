@@ -464,7 +464,7 @@ Keep if: any paid sub OR 500+ visitors. Kill if: 0 paid + under 100 visitors + u
 
 ## SECTION 22: SHORT BIO FOR FUTURE CLAUDE
 
-Evan Jones, sole proprietor, Sugar Grove IL. Building portfolio of AI-powered SaaS sites. Site #1 CallCanvas AI ($59/mo, sales rep tool, live and stable). Site #2 RentRanger AI ($39/mo, apartment hunting, live but pre-Stripe). Both built on same template — _config.js + _helpers.js + predeploy-qa.js foundation. Evan controls Chrome extension that lets you (Claude) drive the browser. He prefers minimal narration and large batches. Memory entries hold credentials — read them. Search past conversations for what you don't have memorized. Code repos: youngwildme3-arch/{site}-site. Context repo: youngwildme3-arch/master-playbook (this file).
+Evan Jones, sole proprietor, Sugar Grove IL. Building portfolio of AI-powered SaaS sites. Site #1 CallCanvas AI ($59/mo, sales rep tool, live and stable). Site #2 RentRanger AI ($39/mo, apartment hunting, live but pre-Stripe). Both built on same template — _config.js + _helpers.js + predeploy-qa.js foundation. Evan controls Chrome extension that lets you (Claude) drive the browser. He prefers minimal narration and large batches. Memory entries hold credentials — read them. Search past conversations for what you don't have memorized. Code repos: youngwildme3-arch/{site}-site. Context repo: youngwildme3-arch/master-playbook (this file). ALSO LIVE (separate from the SaaS portfolio): Social Compass Media Inc. at socialcompassmedia.com — done-for-you short-form video for car dealerships; repo youngwildme3-arch/social-compass-media, Netlify auto-deploy from public/index.html. See Section 24.
 
 ---
 
@@ -479,5 +479,47 @@ public/: index.html (changes per site), research.html, login.html, account.html,
 
 ---
 
-*End of Master Playbook. Version 1.1, May 4, 2026.*
+## SECTION 24: SOCIAL COMPASS MEDIA INC. (LIVE — added June 29, 2026)
+
+**What it is:** A SEPARATE business from the SaaS portfolio — an Illinois corporation providing done-for-you short-form video for car dealerships (films ~5 videos/week on the lot, edits, voiceover, posts to TikTok / Reels / Facebook / YouTube Shorts). This is NOT a SaaS site — do not apply the SaaS template/_config.js rules to it.
+
+**Live site:** https://socialcompassmedia.com — LIVE as of June 29, 2026. A marketing one-pager (navy/gold/cream brand). The old "Evan Jones · Brand Growth Consultant" page was fully replaced with this dealership-focused page.
+
+**Hosting & repo:**
+- GitHub repo: `youngwildme3-arch/social-compass-media` (public)
+- Homepage source file: `public/index.html`
+- Hosted on Netlify, auto-deploys from the `public/` folder on push to `main`. Edit public/index.html, commit to main, and Netlify rebuilds automatically (~1 min).
+- Repo also has a password-gated `/admin` dispatch tool under `netlify/functions/` (admin passcode is in Claude memory only — public repo, do NOT write it here).
+
+**Brand spec (the SCM brand — different from the Linear/dark SaaS aesthetic):**
+- Palette: navy `#0D1F3C` (--navy), navy-deep `#091529`, gold `#C8B688`, cream `#F5F0E6`.
+- Fonts: Playfair Display (display), Cormorant Garamond (italic serif accents), Inter (body).
+- Hero: Unsplash Porsche photo (`photo-1503376780353-7e6692767b70`) with `filter:grayscale(1) brightness(0.5) contrast(1.05)` plus a navy gradient overlay (rgba(14,31,51,0.82) → 0.95) so the whole image reads as ONE navy duotone. Evan approved this "Porsche with blue tint" look.
+- Monograms read **"SCM"** (the small nav corner badge + the large framed hero monogram), gold italic. nav badge font-size 10px; hero monogram 30px (24px on mobile).
+
+**Content / positioning:**
+- Headline: "Social Compass Media Inc." / italic "Short-Form Video for Car Dealerships" / "Done-For-You Video · Built for Dealerships".
+- Credibility (carried from the YWM Family brand): ~1.5M followers (NOT 2M), 10 years, 5+ platforms, partnerships with Walmart / Target / Procter & Gamble / Fortune 500, 15 years business banking at Chase. Scrub Daddy used as the social case study (~$220M revenue).
+- Service: 5 videos/week = filming + editing + captions + voiceover + multi-platform posting + consistent monthly cadence. Six-month minimum, select roster. Pricing tiers (prior sessions): Basic $499 / Mid $649 / Full $799, 16-video monthly minimum, multi-rooftop discounts up to 20%.
+- Footer socials: Instagram, TikTok, YouTube, Pinterest. Contact: 630-699-2928, Evan@socialcompassmedia.com (currently TEXT ONLY — not a real inbox yet; needs email service on the domain).
+
+**How to deploy a change to socialcompassmedia.com:**
+1. Evan must be logged into GitHub in the browser (the old classic PAT is dead — see learnings below; there is no live headless token).
+2. Open `github.com/youngwildme3-arch/social-compass-media/edit/main/public/index.html`.
+3. Replace the file contents and "Commit changes" directly to `main`.
+4. Netlify auto-builds and publishes in ~1 min. Verify at socialcompassmedia.com (cache-bust with ?v=timestamp).
+
+**Technical learnings (June 2026 — reusable for ANY GitHub web-UI edit):**
+- The old classic PAT `ghp_YQB2L47...` is DEAD (revoked by secret-scanning; returns 401). Deploys go through Evan's logged-in browser session via the GitHub web editor, not a token.
+- GitHub's file editor uses a CUSTOM CodeMirror 6 build. To replace a whole file from the browser console: grab a `.cm-line` element, read its `.cmTile` property (GitHub renamed CM6's `.cmView` to `.cmTile`), walk `.parent` up until you hit an object with a `.view` (the EditorView), then `view.dispatch({changes:{from:0,to:view.state.doc.length,insert:NEW_CONTENT}})`. Then click "Commit changes…" and the dialog's green "Commit changes" button.
+- Getting large content into the page: build the string in a `window` variable in small (~2.4KB) chunks — single tool-call args over ~5KB get truncated. Optionally gzip+base64 and inflate with native `DecompressionStream` (CDN scripts like pako are blocked by GitHub's CSP).
+
+**Still pending / open items:**
+- SCM logo: Evan will generate a compass logo externally (Ideogram identified as best for readable text) and bring it back to replace the "SCM" text monograms across the site + one-pager + pricing sheet + business card + email signature.
+- Activate Evan@socialcompassmedia.com as a real inbox (needs forwarding/Workspace on the domain registrar).
+- One-pager + pricing PDFs exist from prior sessions (navy/gold/cream).
+
+---
+
+*End of Master Playbook. Version 1.2, June 29, 2026.*
 *Public reference. Credentials in Claude memory only.*
